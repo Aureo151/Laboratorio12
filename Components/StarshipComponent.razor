@@ -1,0 +1,52 @@
+﻿@inject Blazored.LocalStorage.ISyncLocalStorageService localStorage
+@inject HttpClient Http
+
+@using Models;
+
+@if (productos == null)
+{
+	<p><em>Cargando...</em></p>
+}
+else
+{
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Codigo</th>
+				<th>Nombre</th>
+				<th>Tipo</th>
+				<th>Descripcion</th>
+				<th>Precio_Compra</th>
+				<th>Precio_Venta</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var producto in productos)
+			{
+				<tr>
+					<td>@producto.Codigo</td>
+					<td>@producto.Nombre</td>
+					<td>@producto.Tipo</td>
+					<td>@producto.Descripcion</td>
+					<td>@producto.Precio_Compra</td>
+					<td>@producto.Precio_Venta</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+}
+@code {
+	private List<Producto> productos = new List<Producto>();
+
+	protected override async Task OnInitializedAsync()
+	{
+		// Recuperar la lista de starships desde LocalStorage a una variable var
+		var productoGuardado = localStorage.GetItem<List<Producto>>("productos");
+
+		// Validar si la lista fue recuperada correctamente, copiarla a la lista
+		if (productoGuardado != null)
+		{
+			productos = productoGuardado;
+		}
+	}
+}
