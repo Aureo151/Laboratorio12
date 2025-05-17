@@ -53,9 +53,54 @@
                 <ValidationMessage For="() => producto.Precio_Venta" />
             </div>
         </div>
-
-
-       
+    @if (producto.Tipo == "Alimento")
+    {
+        <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label>Fecha de Vencimiento:</label>
+                    <InputDate id="FechaVencimiento" class="form-control" @bind-Value="fechaVencimiento"/>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label>Unidad de Medida:</label>
+                    <InputText class="form-control" @bind-Value="unidadMedida" />
+                </div>
+        </div>
+    }
+    else if (producto.Tipo == "Electronico")
+    {
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label>Garantía (meses):</label>
+                    <InputNumber class="form-control" @bind-Value="tiempoGarantia" />
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label>Voltaje:</label>
+                    <InputNumber class="form-control" @bind-Value="voltaje" />
+                </div>
+            </div>
+    }
+    else if (producto.Tipo == "Libro")
+    {
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label>Editorial:</label>
+                    <InputText class="form-control" @bind-Value="editorial" />
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label>Categoría:</label>
+                    <InputText class="form-control" @bind-Value="categoria" />
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label>Autor:</label>
+                    <InputText class="form-control" @bind-Value="autor" />
+                </div>
+            </div>
+    }
+        <div class="row mt-3 text-center">
+            <div class="col">
+                <button class="btn btn-secondary" type="submit">Guardar</button>
+            </div>
+        </div>   
     </div>
 
 </EditForm>
@@ -69,6 +114,15 @@
 	private Producto producto = new Producto();
     private List<Producto> productos = new List<Producto>();
 
+    private DateTime fechaVencimiento = DateTime.Today;
+    private string unidadMedida = "";
+
+    private int tiempoGarantia;
+    private int voltaje;
+
+    private string editorial = "";
+    private string categoria = "";
+    private string autor = "";
     private void Guardar()
     {
         productos.Add(producto);
